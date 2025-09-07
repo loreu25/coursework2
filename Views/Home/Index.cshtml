@@ -1,0 +1,84 @@
+@{
+    ViewData["Title"] = "Каталог музыки";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Каталог музыки</h1>
+    <p class="lead">Система управления музыкальной коллекцией</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Каталог музыки</h5>
+                <p class="card-text">Просматривайте и управляйте музыкальной коллекцией</p>
+                <a href="@Url.Action("Index", "Musics")" class="btn btn-primary">Перейти</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Исполнители</h5>
+                <p class="card-text">Управление списком исполнителей</p>
+                <a href="@Url.Action("Index", "Artists")" class="btn btn-success">Перейти</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Жанры</h5>
+                <p class="card-text">Организация музыки по жанрам</p>
+                <a href="@Url.Action("Index", "Genres")" class="btn btn-warning">Перейти</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Типы носителей</h5>
+                <p class="card-text">Управление типами носителей</p>
+                <a href="@Url.Action("Index", "MediaTypes")" class="btn btn-info">Перейти</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Возможности системы</h5>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>Каталогизация музыки</li>
+                    <li>Управление исполнителями</li>
+                    <li>Организация по жанрам</li>
+                    <li>Учет типов носителей</li>
+                    <li>Управление лейблами</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Технологии</h5>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>ASP.NET Core MVC</li>
+                    <li>PostgreSQL</li>
+                    <li>Entity Framework Core</li>
+                    <li>Bootstrap</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+@model IEnumerable<MusicCatalog.Models.Genre>
+
+@{
+    ViewData["Title"] = "Жанры";
+}
+
+<h1>Жанры музыки</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить новый жанр</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.GenreId" class="btn btn-sm btn-warning">Изменить</a>
+                <a asp-action="Details" asp-route-id="@item.GenreId" class="btn btn-sm btn-info">Подробно</a>
+                <a asp-action="Delete" asp-route-id="@item.GenreId" class="btn btn-sm btn-danger">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

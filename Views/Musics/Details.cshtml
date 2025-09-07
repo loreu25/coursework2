@@ -1,0 +1,60 @@
+@model MusicCatalog.Models.Music
+
+@{
+    ViewData["Title"] = "Подробная информация";
+}
+
+<h1>Подробная информация</h1>
+
+<div>
+    <h4>Музыкальная композиция</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Название
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            Год записи
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+        <dt class = "col-sm-2">
+            Жанр
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Genre.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Исполнитель
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Artist.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Композитор
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Composer.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Лейбл
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Label.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Тип носителя
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MediaType.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.MusicId" class="btn btn-warning">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться к списку</a>
+</div>

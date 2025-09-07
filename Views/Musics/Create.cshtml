@@ -1,0 +1,68 @@
+@model MusicCatalog.Models.Music
+
+@{
+    ViewData["Title"] = "Добавить музыку";
+}
+
+<h1>Добавить музыку</h1>
+
+<h4>Новая композиция</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Название</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label">Год записи</label>
+                <input asp-for="Year" class="form-control" type="number" min="1900" max="2030" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GenreId" class="control-label">Жанр</label>
+                <select asp-for="GenreId" class ="form-control" asp-items="ViewBag.GenreId">
+                    <option value="">-- Выберите жанр --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ArtistId" class="control-label">Исполнитель</label>
+                <select asp-for="ArtistId" class ="form-control" asp-items="ViewBag.ArtistId">
+                    <option value="">-- Выберите исполнителя --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComposerId" class="control-label">Композитор</label>
+                <select asp-for="ComposerId" class ="form-control" asp-items="ViewBag.ComposerId">
+                    <option value="">-- Выберите композитора (необязательно) --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="LabelId" class="control-label">Лейбл</label>
+                <select asp-for="LabelId" class ="form-control" asp-items="ViewBag.LabelId">
+                    <option value="">-- Выберите лейбл --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MediaTypeId" class="control-label">Тип носителя</label>
+                <select asp-for="MediaTypeId" class ="form-control" asp-items="ViewBag.MediaTypeId">
+                    <option value="">-- Выберите тип носителя --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться к списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,71 @@
+@model IEnumerable<MusicCatalog.Models.Music>
+
+@{
+    ViewData["Title"] = "Каталог музыки";
+}
+
+<h1>Каталог музыки</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить новую</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Год записи
+            </th>
+            <th>
+                Жанр
+            </th>
+            <th>
+                Исполнитель
+            </th>
+            <th>
+                Композитор
+            </th>
+            <th>
+                Лейбл
+            </th>
+            <th>
+                Тип носителя
+            </th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Composer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Label.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediaType.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MusicId" class="btn btn-sm btn-warning">Изменить</a>
+                <a asp-action="Details" asp-route-id="@item.MusicId" class="btn btn-sm btn-info">Подробно</a>
+                <a asp-action="Delete" asp-route-id="@item.MusicId" class="btn btn-sm btn-danger">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
