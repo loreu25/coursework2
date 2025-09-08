@@ -24,7 +24,6 @@ namespace MusicCatalog.Controllers
             _userManager = userManager;
         }
 
-        // GET: Playlists
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -42,7 +41,6 @@ namespace MusicCatalog.Controllers
             return View(playlists);
         }
 
-        // GET: Playlists/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -72,55 +70,36 @@ namespace MusicCatalog.Controllers
             return View(playlist);
         }
 
-        // GET: Playlists/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Playlists/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name")] Playlist playlist)
         {
-            Console.WriteLine($"POST Create called with playlist name: {playlist?.Name}");
-            
             var currentUser = await _userManager.GetUserAsync(User);
-            Console.WriteLine($"Current user: {currentUser?.UserName}, ID: {currentUser?.Id}");
-            
             if (currentUser == null)
             {
-                Console.WriteLine("User is null, returning Challenge");
                 return Challenge();
             }
 
-            // Убираем валидацию для навигационных свойств
+            // Exclude navigation properties from validation (not posted from form)
             ModelState.Remove("User");
             ModelState.Remove("Musics");
-            
-            Console.WriteLine($"ModelState.IsValid: {ModelState.IsValid}");
-            if (!ModelState.IsValid)
-            {
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine($"ModelState error: {error.ErrorMessage}");
-                }
-            }
 
             if (ModelState.IsValid)
             {
                 playlist.UserId = currentUser.Id;
                 playlist.CreationDate = DateTime.UtcNow;
-                Console.WriteLine($"Adding playlist: {playlist.Name} for user: {playlist.UserId}");
                 _context.Add(playlist);
                 await _context.SaveChangesAsync();
-                Console.WriteLine("Playlist saved successfully");
                 return RedirectToAction(nameof(Index));
             }
             return View(playlist);
         }
 
-        // GET: Playlists/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -144,7 +123,6 @@ namespace MusicCatalog.Controllers
             return View(playlist);
         }
 
-        // POST: Playlists/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PlaylistId,Name,CreationDate,UserId")] Playlist playlist)
@@ -183,7 +161,6 @@ namespace MusicCatalog.Controllers
             return View(playlist);
         }
 
-        // GET: Playlists/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -209,7 +186,6 @@ namespace MusicCatalog.Controllers
             return View(playlist);
         }
 
-        // POST: Playlists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -232,7 +208,6 @@ namespace MusicCatalog.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Playlists/AddMusic/5
         public async Task<IActionResult> AddMusic(int? id)
         {
             if (id == null)
@@ -255,7 +230,6 @@ namespace MusicCatalog.Controllers
                 return NotFound();
             }
 
-            // Получаем музыку, которой еще нет в плейлисте
             var existingMusicIds = playlist.Musics.Select(m => m.MusicId).ToList();
             var availableMusic = await _context.Musics
                 .Include(m => m.Artist)
@@ -268,7 +242,6 @@ namespace MusicCatalog.Controllers
             return View(availableMusic);
         }
 
-        // POST: Playlists/AddMusic/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddMusic(int playlistId, int musicId)
@@ -303,7 +276,6 @@ namespace MusicCatalog.Controllers
             return RedirectToAction(nameof(Details), new { id = playlistId });
         }
 
-        // POST: Playlists/RemoveMusic
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveMusic(int playlistId, int musicId)

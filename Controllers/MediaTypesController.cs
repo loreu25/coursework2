@@ -20,7 +20,6 @@ namespace MusicCatalog.Controllers
             _context = context;
         }
 
-        // GET: MediaTypes
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -47,7 +46,6 @@ namespace MusicCatalog.Controllers
             return View(await mediaTypes.ToListAsync());
         }
 
-        // GET: MediaTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -65,16 +63,12 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // GET: MediaTypes/Create
         [Authorize(Roles = "Musician")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: MediaTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Musician")]
@@ -89,7 +83,6 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // GET: MediaTypes/Edit/5
         [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -106,9 +99,6 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // POST: MediaTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Musician")]
@@ -142,7 +132,6 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // GET: MediaTypes/Delete/5
         [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -161,7 +150,6 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // POST: MediaTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Musician")]

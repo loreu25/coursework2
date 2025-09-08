@@ -22,13 +22,11 @@ namespace MusicCatalog.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure the many-to-many relationship between Playlist and Music
             modelBuilder.Entity<Playlist>()
                 .HasMany(p => p.Musics)
                 .WithMany(m => m.Playlists)
                 .UsingEntity(j => j.ToTable("PlaylistTracks"));
 
-            // Configure the relationship between ApplicationUser and Playlist
             modelBuilder.Entity<Playlist>()
                 .HasOne(p => p.User)
                 .WithMany(u => u.Playlists)

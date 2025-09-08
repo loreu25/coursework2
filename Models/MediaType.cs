@@ -8,7 +8,7 @@ namespace MusicCatalog.Models
         public int MediaTypeId { get; set; }
         [Required(ErrorMessage = "Название обязательно")]
         [Display(Name = "Название")]
-        public string Name { get; set; } // e.g., CD, Cassette, Vinyl
+        public string Name { get; set; } 
 
         public ICollection<Music> Musics { get; set; } = new List<Music>();
     }

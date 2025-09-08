@@ -45,10 +45,8 @@ namespace MusicCatalog.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Ensure roles exist
                     await EnsureRolesExist();
 
-                    // Add user to role
                     await _userManager.AddToRoleAsync(user, model.Role);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);

@@ -16,10 +16,8 @@ namespace MusicCatalog.Models
         [Display(Name = "Дата создания")]
         public DateTime CreationDate { get; set; }
 
-        // Foreign Key для ApplicationUser
         public string UserId { get; set; } = string.Empty;
 
-        // Navigation properties
         public ApplicationUser User { get; set; } = null!;
         public ICollection<Music> Musics { get; set; } = new List<Music>();
     }

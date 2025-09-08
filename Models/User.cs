@@ -20,12 +20,11 @@ namespace MusicCatalog.Models
         public override string? PhoneNumber { get; set; }
 
         [Display(Name = "Роль")]
-        public string Role { get; set; } = "User"; // "User" или "Musician"
+        public string Role { get; set; } = "User";
 
         public ICollection<Playlist> Playlists { get; set; } = new List<Playlist>();
     }
 
-    // Оставляем старую модель для совместимости, но помечаем как устаревшую
     [Obsolete("Используйте ApplicationUser вместо User")]
     public class User
     {
