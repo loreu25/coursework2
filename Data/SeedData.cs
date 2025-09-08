@@ -89,7 +89,7 @@ namespace MusicCatalog.Data
                     new Music 
                     { 
                         Title = "Hey Jude", 
-                        Year = 1969,
+                        RecordingDate = new DateOnly(1969, 8, 26),
                         GenreId = genres.First(g => g.Name == "Rock").GenreId,
                         ArtistId = artists.First(a => a.Name == "The Beatles").ArtistId,
                         ComposerId = composers.FirstOrDefault(c => c.Name == "Paul McCartney")?.ComposerId,
@@ -99,7 +99,7 @@ namespace MusicCatalog.Data
                     new Music 
                     { 
                         Title = "Bohemian Rhapsody", 
-                        Year = 1975,
+                        RecordingDate = new DateOnly(1975, 10, 31),
                         GenreId = genres.First(g => g.Name == "Rock").GenreId,
                         ArtistId = artists.First(a => a.Name == "Queen").ArtistId,
                         ComposerId = composers.FirstOrDefault(c => c.Name == "Freddie Mercury")?.ComposerId,
@@ -109,7 +109,7 @@ namespace MusicCatalog.Data
                     new Music 
                     { 
                         Title = "Billie Jean", 
-                        Year = 1983,
+                        RecordingDate = new DateOnly(1983, 1, 2),
                         GenreId = genres.First(g => g.Name == "Pop").GenreId,
                         ArtistId = artists.First(a => a.Name == "Michael Jackson").ArtistId,
                         ComposerId = null, // Майкл Джексон сам композитор
@@ -119,7 +119,7 @@ namespace MusicCatalog.Data
                     new Music 
                     { 
                         Title = "Stairway to Heaven", 
-                        Year = 1971,
+                        RecordingDate = new DateOnly(1971, 11, 8),
                         GenreId = genres.First(g => g.Name == "Rock").GenreId,
                         ArtistId = artists.First(a => a.Name == "Led Zeppelin").ArtistId,
                         ComposerId = composers.FirstOrDefault(c => c.Name == "Jimmy Page")?.ComposerId,
@@ -129,7 +129,7 @@ namespace MusicCatalog.Data
                     new Music 
                     { 
                         Title = "Wish You Were Here", 
-                        Year = 1975,
+                        RecordingDate = new DateOnly(1975, 9, 12),
                         GenreId = genres.First(g => g.Name == "Rock").GenreId,
                         ArtistId = artists.First(a => a.Name == "Pink Floyd").ArtistId,
                         ComposerId = composers.FirstOrDefault(c => c.Name == "David Gilmour")?.ComposerId,

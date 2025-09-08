@@ -65,7 +65,7 @@ namespace MusicCatalog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Year,GenreId,ArtistId,ComposerId,LabelId,MediaTypeId")] Music music)
+        public async Task<IActionResult> Create([Bind("Title,RecordingDate,GenreId,ArtistId,ComposerId,LabelId,MediaTypeId")] Music music)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace MusicCatalog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MusicId,Title,Year,GenreId,ArtistId,ComposerId,LabelId,MediaTypeId")] Music music)
+        public async Task<IActionResult> Edit(int id, [Bind("MusicId,Title,RecordingDate,GenreId,ArtistId,ComposerId,LabelId,MediaTypeId")] Music music)
         {
             if (id != music.MusicId)
             {

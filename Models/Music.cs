@@ -9,9 +9,11 @@ namespace MusicCatalog.Models
         public int MusicId { get; set; } // Inventory number
         
         [Required(ErrorMessage = "Название обязательно")]
+        [Display(Name = "Название")]
         public string Title { get; set; }
         
-        public int? Year { get; set; } // Год записи
+        [Display(Name = "Дата записи")]
+        public DateOnly? RecordingDate { get; set; } // Дата записи
 
         // Foreign Keys
         [Required(ErrorMessage = "Выберите жанр")]
