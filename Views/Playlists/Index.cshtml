@@ -1,0 +1,46 @@
+@model IEnumerable<MusicCatalog.Models.Playlist>
+
+@{
+    ViewData["Title"] = "Мои плейлисты";
+}
+
+<h1>Мои плейлисты</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Создать новый плейлист</a>
+</p>
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                Создан: @item.CreationDate.ToString("dd.MM.yyyy HH:mm")
+                            </small><br>
+                            <span class="badge badge-info">@item.Musics.Count треков</span>
+                        </p>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Details" asp-route-id="@item.PlaylistId" class="btn btn-sm btn-info">Открыть</a>
+                            <a asp-action="Delete" asp-route-id="@item.PlaylistId" class="btn btn-sm btn-danger">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">У вас пока нет плейлистов</h4>
+        <p>Создайте свой первый плейлист, чтобы начать собирать любимую музыку!</p>
+        <hr>
+        <a asp-action="Create" class="btn btn-primary">Создать плейлист</a>
+    </div>
+}

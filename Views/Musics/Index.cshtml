@@ -6,23 +6,60 @@
 
 <h1>Каталог музыки</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Добавить новую</a>
-</p>
+@if (User.IsInRole("Musician"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Добавить новую</a>
+    </p>
+}
+
+<!-- Фильтры и поиск -->
+<div class="row mb-3">
+    <div class="col-md-12">
+        <form asp-action="Index" method="get" class="form-inline">
+            <div class="form-group mr-3">
+                <label for="searchString" class="mr-2">Поиск:</label>
+                <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Название композиции" />
+            </div>
+            <div class="form-group mr-3">
+                <label for="genreFilter" class="mr-2">Жанр:</label>
+                <select name="genreFilter" asp-items="ViewBag.Genres" class="form-control">
+                    <option value="">Все жанры</option>
+                </select>
+            </div>
+            <div class="form-group mr-3">
+                <label for="artistFilter" class="mr-2">Исполнитель:</label>
+                <select name="artistFilter" asp-items="ViewBag.Artists" class="form-control">
+                    <option value="">Все исполнители</option>
+                </select>
+            </div>
+            <input type="submit" value="Фильтровать" class="btn btn-secondary" />
+            <a asp-action="Index" class="btn btn-outline-secondary ml-2">Сбросить</a>
+        </form>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Название
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-genreFilter="@ViewData["CurrentGenreFilter"]" asp-route-artistFilter="@ViewData["CurrentArtistFilter"]">
+                    Название
+                </a>
             </th>
             <th>
-                Дата записи
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-genreFilter="@ViewData["CurrentGenreFilter"]" asp-route-artistFilter="@ViewData["CurrentArtistFilter"]">
+                    Дата записи
+                </a>
             </th>
             <th>
-                Жанр
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["GenreSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-genreFilter="@ViewData["CurrentGenreFilter"]" asp-route-artistFilter="@ViewData["CurrentArtistFilter"]">
+                    Жанр
+                </a>
             </th>
             <th>
-                Исполнитель
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ArtistSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-genreFilter="@ViewData["CurrentGenreFilter"]" asp-route-artistFilter="@ViewData["CurrentArtistFilter"]">
+                    Исполнитель
+                </a>
             </th>
             <th>
                 Композитор
@@ -61,9 +98,15 @@
                 @Html.DisplayFor(modelItem => item.MediaType.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MusicId" class="btn btn-sm btn-warning">Изменить</a>
+                @if (User.IsInRole("Musician"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.MusicId" class="btn btn-sm btn-warning">Изменить</a>
+                }
                 <a asp-action="Details" asp-route-id="@item.MusicId" class="btn btn-sm btn-info">Подробно</a>
-                <a asp-action="Delete" asp-route-id="@item.MusicId" class="btn btn-sm btn-danger">Удалить</a>
+                @if (User.IsInRole("Musician"))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.MusicId" class="btn btn-sm btn-danger">Удалить</a>
+                }
             </td>
         </tr>
 }

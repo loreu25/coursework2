@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +21,30 @@ namespace MusicCatalog.Controllers
         }
 
         // GET: Labels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            return View(await _context.Labels.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            var labels = from l in _context.Labels
+                        select l;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                labels = labels.Where(l => l.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    labels = labels.OrderByDescending(l => l.Name);
+                    break;
+                default:
+                    labels = labels.OrderBy(l => l.Name);
+                    break;
+            }
+
+            return View(await labels.ToListAsync());
         }
 
         // GET: Labels/Details/5
@@ -44,6 +66,7 @@ namespace MusicCatalog.Controllers
         }
 
         // GET: Labels/Create
+        [Authorize(Roles = "Musician")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +77,7 @@ namespace MusicCatalog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Create([Bind("Name")] Label label)
         {
             if (ModelState.IsValid)
@@ -66,6 +90,7 @@ namespace MusicCatalog.Controllers
         }
 
         // GET: Labels/Edit/5
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +111,7 @@ namespace MusicCatalog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Edit(int id, [Bind("LabelId,Name")] Label label)
         {
             if (id != label.LabelId)
@@ -117,6 +143,7 @@ namespace MusicCatalog.Controllers
         }
 
         // GET: Labels/Delete/5
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +164,7 @@ namespace MusicCatalog.Controllers
         // POST: Labels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var label = await _context.Labels.FindAsync(id);

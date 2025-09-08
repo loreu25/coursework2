@@ -1,0 +1,82 @@
+@model MusicCatalog.Models.Playlist
+
+@{
+    ViewData["Title"] = "Плейлист: " + Model.Name;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>@Html.DisplayFor(model => model.Name)</h1>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.PlaylistId" class="btn btn-warning">Изменить</a>
+        <a asp-action="AddMusic" asp-route-id="@Model.PlaylistId" class="btn btn-success">Добавить музыку</a>
+        <a asp-action="Index" class="btn btn-secondary">Назад к плейлистам</a>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">
+                    <strong>Дата создания:</strong> @Model.CreationDate.ToString("dd.MM.yyyy HH:mm")<br>
+                    <strong>Количество треков:</strong> @Model.Musics.Count
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Musics.Any())
+{
+    <h3>Треки в плейлисте</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Исполнитель</th>
+                    <th>Жанр</th>
+                    <th>Дата записи</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var music in Model.Musics)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => music.Title)</td>
+                        <td>@Html.DisplayFor(modelItem => music.Artist.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => music.Genre.Name)</td>
+                        <td>
+                            @if (music.RecordingDate.HasValue)
+                            {
+                                @music.RecordingDate.Value.ToString("dd.MM.yyyy")
+                            }
+                            else
+                            {
+                                <span class="text-muted">Не указана</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-controller="Musics" asp-action="Details" asp-route-id="@music.MusicId" asp-route-returnController="Playlists" asp-route-returnAction="Details" asp-route-returnId="@Model.PlaylistId" class="btn btn-sm btn-info">Подробно</a>
+                            <form asp-action="RemoveMusic" method="post" class="d-inline">
+                                <input type="hidden" name="playlistId" value="@Model.PlaylistId" />
+                                <input type="hidden" name="musicId" value="@music.MusicId" />
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Удалить трек из плейлиста?')">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">Плейлист пуст</h4>
+        <p>В этом плейлисте пока нет музыки. Добавьте треки, чтобы начать слушать!</p>
+        <hr>
+        <a asp-action="AddMusic" asp-route-id="@Model.PlaylistId" class="btn btn-success">Добавить музыку</a>
+    </div>
+}

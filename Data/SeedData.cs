@@ -140,47 +140,8 @@ namespace MusicCatalog.Data
                 context.Musics.AddRange(musics);
                 context.SaveChanges();
 
-                // Добавляем пользователей
-                var users = new User[]
-                {
-                    new User 
-                    { 
-                        FullName = "Иван Петров", 
-                        Address = "Москва, ул. Тверская, 1",
-                        Phone = "+7 (495) 123-45-67",
-                        Login = "ivan.petrov",
-                        PasswordHash = "hashed_password_1"
-                    },
-                    new User 
-                    { 
-                        FullName = "Мария Сидорова", 
-                        Address = "СПб, Невский пр., 25",
-                        Phone = "+7 (812) 987-65-43",
-                        Login = "maria.sidorova",
-                        PasswordHash = "hashed_password_2"
-                    }
-                };
-                context.Users.AddRange(users);
-                context.SaveChanges();
-
-                // Добавляем плейлисты
-                var playlists = new Playlist[]
-                {
-                    new Playlist 
-                    { 
-                        Name = "Классический рок", 
-                        CreationDate = DateTime.Now,
-                        UserId = users.First().UserId
-                    },
-                    new Playlist 
-                    { 
-                        Name = "Любимые хиты", 
-                        CreationDate = DateTime.Now,
-                        UserId = users.Last().UserId
-                    }
-                };
-                context.Playlists.AddRange(playlists);
-                context.SaveChanges();
+                // Пользователи и плейлисты будут создаваться через Identity после регистрации
+                // Пока что оставляем только базовые данные каталога
             }
         }
     }
