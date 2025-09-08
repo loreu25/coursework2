@@ -14,7 +14,7 @@ ASP.NET Core MVC приложение для управления музыкал
 ## Технологии
 
 - **Backend**: ASP.NET Core 8.0 MVC
-- **Database**: PostgreSQL + Entity Framework Core
+- **Database**: SQLite + Entity Framework Core
 - **Authentication**: ASP.NET Core Identity
 - **Frontend**: Bootstrap 5, HTML, CSS, JavaScript
 - **ORM**: Entity Framework Core 9.0
@@ -22,7 +22,6 @@ ASP.NET Core MVC приложение для управления музыкал
 ## Требования
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [PostgreSQL 12+](https://www.postgresql.org/download/)
 - Git
 
 ## Установка и запуск
@@ -34,38 +33,24 @@ git clone <URL_РЕПОЗИТОРИЯ>
 cd coursework_2
 ```
 
-### 2. Настройка базы данных
-
-Убедитесь, что PostgreSQL запущен и создайте базу данных:
-
-```sql
-CREATE DATABASE MusicCatalogDb;
-```
-
-### 3. Настройка конфигурации
-
-Скопируйте файл примера конфигурации:
-
-```bash
-cp MusicCatalog/appsettings.Development.json.example MusicCatalog/appsettings.Development.json
-```
-
-Отредактируйте `MusicCatalog/appsettings.Development.json` и укажите свои параметры подключения к PostgreSQL:
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Port=5432;Database=MusicCatalogDb;Username=ваш_пользователь;Password=ваш_пароль"
-  }
-}
-```
-
-### 4. Применение миграций
-
-Перейдите в папку проекта и примените миграции:
+### 2. Переход в папку проекта
 
 ```bash
 cd MusicCatalog
+```
+
+### 3. Восстановление пакетов
+
+```bash
+dotnet tool install -g Microsoft.Web.LibraryManager.Cli
+libman restore
+```
+
+### 4. Применение миграций (ОБЯЗАТЕЛЬНО!)
+
+**ВАЖНО:** Без этого шага приложение не запустится!
+
+```bash
 dotnet ef database update
 ```
 
@@ -79,11 +64,13 @@ dotnet run
 
 ## Первый запуск
 
-При первом запуске база данных автоматически заполнится тестовыми данными:
-- Жанры (Rock, Pop, Jazz, Classical, Electronic, Hip-Hop, Blues, Country)
-- Исполнители (The Beatles, Queen, Michael Jackson, Led Zeppelin, Pink Floyd, Elvis Presley, Bob Dylan, The Rolling Stones)
-- Композиторы, лейблы, типы носителей
-- Несколько музыкальных треков
+При первом запуске:
+1. База данных SQLite (`MusicCatalog.db`) создастся автоматически в папке проекта
+2. База автоматически заполнится тестовыми данными:
+   - Жанры (Rock, Pop, Jazz, Classical, Electronic, Hip-Hop, Blues, Country)
+   - Исполнители (The Beatles, Queen, Michael Jackson, Led Zeppelin, Pink Floyd, Elvis Presley, Bob Dylan, The Rolling Stones)
+   - Композиторы, лейблы, типы носителей
+   - Несколько музыкальных треков
 
 ## Использование
 
@@ -131,6 +118,7 @@ MusicCatalog/
 ├── Properties/          # Настройки запуска
 ├── wwwroot/            # Статические файлы
 ├── appsettings.json    # Основная конфигурация
+├── MusicCatalog.db     # База данных SQLite (создается автоматически)
 └── Program.cs          # Точка входа приложения
 ```
 
@@ -157,9 +145,19 @@ dotnet ef database update
 ### Сброс базы данных
 
 ```bash
-dotnet ef database drop
+# Удалить файл базы данных
+rm MusicCatalog.db
+# Применить миграции заново
 dotnet ef database update
 ```
+
+## Преимущества SQLite
+
+- ✅ **Простота установки** - не требует отдельного сервера БД
+- ✅ **Портативность** - база данных в одном файле
+- ✅ **Быстрый старт** - готово к работе сразу после клонирования
+- ✅ **Кроссплатформенность** - работает на Windows, macOS, Linux
+- ✅ **Нет настройки** - не нужно настраивать строки подключения
 
 ## Лицензия
 
