@@ -1,0 +1,65 @@
+@model IEnumerable<MusicCatalog.Models.Music>
+
+@{
+    ViewData["Title"] = "Добавить музыку в плейлист";
+}
+
+<h1>Добавить музыку в плейлист "@ViewBag.PlaylistName"</h1>
+
+<p>
+    <a asp-action="Details" asp-route-id="@ViewBag.PlaylistId" class="btn btn-secondary">Назад к плейлисту</a>
+</p>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Исполнитель</th>
+                    <th>Жанр</th>
+                    <th>Дата записи</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Artist.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Genre.Name)</td>
+                        <td>
+                            @if (item.RecordingDate.HasValue)
+                            {
+                                @item.RecordingDate.Value.ToString("dd.MM.yyyy")
+                            }
+                            else
+                            {
+                                <span class="text-muted">Не указана</span>
+                            }
+                        </td>
+                        <td>
+                            <form asp-action="AddMusic" method="post" class="d-inline">
+                                <input type="hidden" name="playlistId" value="@ViewBag.PlaylistId" />
+                                <input type="hidden" name="musicId" value="@item.MusicId" />
+                                <button type="submit" class="btn btn-sm btn-success">Добавить</button>
+                            </form>
+                            <a asp-controller="Musics" asp-action="Details" asp-route-id="@item.MusicId" class="btn btn-sm btn-info">Подробно</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">Нет доступной музыки</h4>
+        <p>Вся музыка из каталога уже добавлена в этот плейлист, или каталог пуст.</p>
+        <hr>
+        <a asp-action="Details" asp-route-id="@ViewBag.PlaylistId" class="btn btn-primary">Вернуться к плейлисту</a>
+    </div>
+}

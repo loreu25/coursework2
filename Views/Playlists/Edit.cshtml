@@ -1,0 +1,34 @@
+@model MusicCatalog.Models.Playlist
+
+@{
+    ViewData["Title"] = "Изменить плейлист";
+}
+
+<h1>Изменить плейлист</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <input type="hidden" asp-for="PlaylistId" />
+            <input type="hidden" asp-for="CreationDate" />
+            <input type="hidden" asp-for="UserId" />
+            
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a asp-action="Details" asp-route-id="@Model.PlaylistId" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

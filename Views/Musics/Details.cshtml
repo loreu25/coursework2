@@ -56,5 +56,12 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.MusicId" class="btn btn-warning">Изменить</a>
-    <a asp-action="Index" class="btn btn-secondary">Вернуться к списку</a>
+    @if (!string.IsNullOrEmpty(ViewBag.ReturnController))
+    {
+        <a asp-controller="@ViewBag.ReturnController" asp-action="@ViewBag.ReturnAction" asp-route-id="@ViewBag.ReturnId" class="btn btn-secondary">Вернуться к плейлисту</a>
+    }
+    else
+    {
+        <a asp-action="Index" class="btn btn-secondary">Вернуться к списку</a>
+    }
 </div>

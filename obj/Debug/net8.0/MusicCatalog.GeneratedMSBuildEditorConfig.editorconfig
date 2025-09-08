@@ -28,6 +28,14 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Artists/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aXN0c1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -154,6 +162,30 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Musics/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXVzaWNzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Playlists/AddMusic.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWxpc3RzXEFkZE11c2ljLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Playlists/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWxpc3RzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Playlists/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWxpc3RzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Playlists/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWxpc3RzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Playlists/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWxpc3RzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Playlists/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxheWxpc3RzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Nikita/Desktop/Progs/courseworks/coursework_2/MusicCatalog/Views/Shared/Error.cshtml]

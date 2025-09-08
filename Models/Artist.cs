@@ -12,7 +12,7 @@ namespace MusicCatalog.Models
         public string Name { get; set; }
         
         [Display(Name = "Биография")]
-        public string? Bio { get; set; } // Nullable
+        public string? Bio { get; set; } 
 
         public ICollection<Music> Musics { get; set; } = new List<Music>();
     }

@@ -1,0 +1,30 @@
+@model MusicCatalog.Models.Playlist
+
+@{
+    ViewData["Title"] = "Удалить плейлист";
+}
+
+<h1>Удалить плейлист</h1>
+
+<h3>Вы уверены, что хотите удалить этот плейлист?</h3>
+<div class="alert alert-warning" role="alert">
+    <strong>Внимание!</strong> Это действие нельзя отменить. Плейлист и все связи с музыкой будут удалены.
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Html.DisplayFor(model => model.Name)</h5>
+        <p class="card-text">
+            <strong>Дата создания:</strong> @Model.CreationDate.ToString("dd.MM.yyyy HH:mm")<br>
+            <strong>Количество треков:</strong> @Model.Musics.Count
+        </p>
+    </div>
+</div>
+
+<div class="mt-3">
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PlaylistId" />
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a asp-action="Details" asp-route-id="@Model.PlaylistId" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>

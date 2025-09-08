@@ -1,15 +1,15 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MusicCatalog.Models;
 
 namespace MusicCatalog.Data
 {
-    public class MusicCatalogContext : DbContext
+    public class MusicCatalogContext : IdentityDbContext<ApplicationUser>
     {
         public MusicCatalogContext(DbContextOptions<MusicCatalogContext> options) : base(options)
         {
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Composer> Composers { get; set; }
         public DbSet<Genre> Genres { get; set; }
@@ -22,11 +22,16 @@ namespace MusicCatalog.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure the many-to-many relationship between Playlist and Music
             modelBuilder.Entity<Playlist>()
                 .HasMany(p => p.Musics)
                 .WithMany(m => m.Playlists)
-                .UsingEntity(j => j.ToTable("PlaylistTracks")); // This will create the join table
+                .UsingEntity(j => j.ToTable("PlaylistTracks"));
+
+            modelBuilder.Entity<Playlist>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.Playlists)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

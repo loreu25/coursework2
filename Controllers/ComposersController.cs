@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,13 +20,32 @@ namespace MusicCatalog.Controllers
             _context = context;
         }
 
-        // GET: Composers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            return View(await _context.Composers.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            var composers = from c in _context.Composers
+                           select c;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                composers = composers.Where(c => c.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    composers = composers.OrderByDescending(c => c.Name);
+                    break;
+                default:
+                    composers = composers.OrderBy(c => c.Name);
+                    break;
+            }
+
+            return View(await composers.ToListAsync());
         }
 
-        // GET: Composers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,17 +63,15 @@ namespace MusicCatalog.Controllers
             return View(composer);
         }
 
-        // GET: Composers/Create
+        [Authorize(Roles = "Musician")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Composers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Create([Bind("Name")] Composer composer)
         {
             if (ModelState.IsValid)
@@ -65,7 +83,7 @@ namespace MusicCatalog.Controllers
             return View(composer);
         }
 
-        // GET: Composers/Edit/5
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,11 +99,9 @@ namespace MusicCatalog.Controllers
             return View(composer);
         }
 
-        // POST: Composers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Edit(int id, [Bind("ComposerId,Name")] Composer composer)
         {
             if (id != composer.ComposerId)
@@ -116,7 +132,7 @@ namespace MusicCatalog.Controllers
             return View(composer);
         }
 
-        // GET: Composers/Delete/5
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,9 +150,9 @@ namespace MusicCatalog.Controllers
             return View(composer);
         }
 
-        // POST: Composers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var composer = await _context.Composers.FindAsync(id);

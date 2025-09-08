@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,13 +20,32 @@ namespace MusicCatalog.Controllers
             _context = context;
         }
 
-        // GET: MediaTypes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            return View(await _context.MediaTypes.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            var mediaTypes = from m in _context.MediaTypes
+                            select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                mediaTypes = mediaTypes.Where(m => m.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    mediaTypes = mediaTypes.OrderByDescending(m => m.Name);
+                    break;
+                default:
+                    mediaTypes = mediaTypes.OrderBy(m => m.Name);
+                    break;
+            }
+
+            return View(await mediaTypes.ToListAsync());
         }
 
-        // GET: MediaTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,17 +63,15 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // GET: MediaTypes/Create
+        [Authorize(Roles = "Musician")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: MediaTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Create([Bind("Name")] MediaType mediaType)
         {
             if (ModelState.IsValid)
@@ -65,7 +83,7 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // GET: MediaTypes/Edit/5
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,11 +99,9 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // POST: MediaTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Edit(int id, [Bind("MediaTypeId,Name")] MediaType mediaType)
         {
             if (id != mediaType.MediaTypeId)
@@ -116,7 +132,7 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // GET: MediaTypes/Delete/5
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,9 +150,9 @@ namespace MusicCatalog.Controllers
             return View(mediaType);
         }
 
-        // POST: MediaTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Musician")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var mediaType = await _context.MediaTypes.FindAsync(id);

@@ -6,7 +6,7 @@ namespace MusicCatalog.Models
 {
     public class Music
     {
-        public int MusicId { get; set; } // Inventory number
+        public int MusicId { get; set; }
         
         [Required(ErrorMessage = "Название обязательно")]
         [Display(Name = "Название")]
@@ -24,7 +24,7 @@ namespace MusicCatalog.Models
         [Range(1, int.MaxValue, ErrorMessage = "Выберите исполнителя")]
         public int ArtistId { get; set; }
         
-        public int? ComposerId { get; set; } // A song might not have a separate composer
+        public int? ComposerId { get; set; } 
         
         [Required(ErrorMessage = "Выберите лейбл")]
         [Range(1, int.MaxValue, ErrorMessage = "Выберите лейбл")]
@@ -34,7 +34,6 @@ namespace MusicCatalog.Models
         [Range(1, int.MaxValue, ErrorMessage = "Выберите тип носителя")]
         public int MediaTypeId { get; set; }
 
-        // Navigation properties
         public Genre? Genre { get; set; }
         public Artist? Artist { get; set; }
         public Composer? Composer { get; set; }
