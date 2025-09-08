@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 
 // Add DbContext
 builder.Services.AddDbContext<MusicCatalog.Data.MusicCatalogContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add Identity services
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

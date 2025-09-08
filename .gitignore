@@ -492,10 +492,18 @@ temp/
 ehthumbs.db
 Thumbs.db
 
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+
 # ASP.NET Core environment-specific settings (keep local only)
-MusicCatalog/appsettings.Development.json
-MusicCatalog/appsettings.Local.json
-MusicCatalog/appsettings.*.local.json
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
 
 # User secrets
 **/secrets.json
+
+# Keep client-side libraries for easier deployment
+!wwwroot/lib/
